@@ -1,118 +1,115 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import { StyleSheet } from 'react-native'
+import React from 'react'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import Icon from 'react-native-vector-icons/FontAwesome'
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
+import MaterialComunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+// Screens for Navigation
+import AddQuestions from './Screens/AddQuestions';
+import Profile from './Screens/Profile';
+import Home from './Screens/Home'
+import Dashboard from './Screens/Dashboard'
+import CustomDrawer from './Screens/CustomDrawer';
+import TakeQuiz from './Screens/TakeQuiz';
+import ShowResult from './Screens/ShowResult';
+import PrivacyPolicy from './Screens/PrivacyPolicy';
 
-import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+// params for Stack Navigation
+export type RootStackParamList = {
+  Home: undefined,
+  DrawerNavigation: undefined
+  AddQuestions: {
+    title: string
+    id: string
+    name:string
+  }
+  TakeQuiz:{
+    title: string
+    id: string
+    name:string
+  }
+  ShowResult:{
+    score: boolean[]
+  }
+};
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
-
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
+// params for Drawer Navigation
+export type DrawerParams = {
+  Dashboard: undefined,
+  Profile: undefined,
+  PrivacyPolicy:undefined
 }
+// Stack and Drawer Navigators
+const Stack = createNativeStackNavigator<RootStackParamList>()
+const Drawer = createDrawerNavigator<DrawerParams>()
+4
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+// Drawer Navigation function
+const DrawerNavigation = ({ route,navigation }: any) => {
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
+    <Drawer.Navigator initialRouteName='Dashboard' drawerContent={(props) => <CustomDrawer {...props} />} screenOptions={{
+      drawerStyle: {
+        backgroundColor: '#c6cbef',
+        width: 230,
+      },
+      drawerType: 'front',
+      drawerLabelStyle: {
+        marginLeft: -25,
+        fontSize: 18,
+        fontWeight: 'bold'
+      }
+    }}>
+      <Drawer.Screen name='Dashboard' component={Dashboard} options={{
+        drawerIcon: ({ color }) => (
+          <MaterialIcons name='home-max' size={28} color={color} />
+        ),
+      }} />
+      <Drawer.Screen name='Profile' component={Profile} options={{
+        drawerIcon: ({ color }) => (
+          <Icon name='user-o' size={28} color={color} />
+        )
+      }} />
+      <Drawer.Screen name='PrivacyPolicy' component={PrivacyPolicy} options={{
+        drawerIcon: ({ color }) => (
+          <MaterialComunityIcons name='shield-key' size={28} color={color} />
+        )
+      }} />
+    </Drawer.Navigator>
+  )
 }
+
+// main App Satart here
+const App = () => {
+
+  return (
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='Home' component={Home} />
+        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} />
+        <Stack.Screen name='AddQuestions' component={AddQuestions} options={{
+          headerShown: true,
+          headerTitle: 'Add Questions',
+        }} />
+        <Stack.Screen name='TakeQuiz' component={TakeQuiz} options={{
+          headerShown: true,
+          headerTitle: 'Quiz Test',
+        }}/>
+        <Stack.Screen name='ShowResult' component={ShowResult} options={{
+          headerShown: true,
+          headerTitle: 'Quiz Result',
+        }}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+
+export default App
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
-export default App;
+  container: {
+  }
+})

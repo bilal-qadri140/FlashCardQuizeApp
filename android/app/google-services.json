@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "590950956131",
+    "project_id": "quizapp-d83be",
+    "storage_bucket": "quizapp-d83be.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:590950956131:android:149e1a2ee95fe0963f8c56",
+        "android_client_info": {
+          "package_name": "com.flashcardquizeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "590950956131-pmu8cv3f44qegn0in5kgmukpgcj5ennr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.flashcardquizeapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "590950956131-9tlql3ba30mb0mdo5l69b19ul714r0ep.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyALumc260HI4Y5C3b4VPwwAJ7Li4Yo-1b0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "590950956131-9tlql3ba30mb0mdo5l69b19ul714r0ep.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
