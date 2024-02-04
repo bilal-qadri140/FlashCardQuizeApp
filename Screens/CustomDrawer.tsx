@@ -1,14 +1,12 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList, DrawerScreenProps } from '@react-navigation/drawer'
-import { RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../App';
+import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import auth from '@react-native-firebase/auth';
-import { Drawer } from 'react-native-paper';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
-type DashboardScreenProps = DrawerScreenProps<RootStackParamList, 'DrawerNavigation'>
-const CustomDrawer = (props: DrawerContentComponentProps, { route, navigation }: DashboardScreenProps) => {
+
+// main App starts here
+const CustomDrawer = (props: DrawerContentComponentProps) => {
 
     const [name, setName] = useState<string | null | undefined>()
     const [email, setEmail] = useState<string | null | undefined>()
@@ -44,11 +42,12 @@ const CustomDrawer = (props: DrawerContentComponentProps, { route, navigation }:
                         auth().signOut().then(() => {
                             // navigation.closeDrawer
                             GoogleSignin.signOut().then(() => {
-
-                            }).catch(() => { })
-
-                            props.navigation.navigate('Home')
-                            console.log('User SignOut ');
+                                ToastAndroid.show('User Loged out successfully',ToastAndroid.LONG)
+                                props.navigation.navigate('Home')
+                            }).catch(() => { 
+                                ToastAndroid.show('User not Loged out successfully',ToastAndroid.LONG)
+                            })
+                            console.log('User SignOut ')
                         }).catch((error) => {
                             return console.log(error);
                         })
