@@ -97,8 +97,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
               signInWithGoogle()
                 .then(gmail => {
                   ToastAndroid.show('Loged in as ' + gmail.user.displayName, ToastAndroid.LONG)
-                  navigation.navigate('ShowResult', { score: [] })
+                  // navigation.navigate('ShowResult', { score: [] })
                   setIsSignedIn(true)
+                  navigation.navigate('DrawerNavigation')
                 })
                 .catch(error => {
                   console.log(error)

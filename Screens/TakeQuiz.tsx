@@ -60,7 +60,6 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
                 {!isLoading ? <FlatList
                     data={quizData}
                     showsVerticalScrollIndicator={false}
-
                     renderItem={({ item }) => (
                         <View>
                             <Text style={styles.question}>{item.question}</Text>
@@ -103,30 +102,35 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
                         </View>
                     )}
                 /> :
+
                     <View style={{ flex: 1 }}>
                         <Text style={styles.loading}>Loading...</Text>
-                    </View>}
+                    </View>
+
+                }
             </View>
 
-            {!isLoading ? <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} activeOpacity={0.6}
-                    onPress={() => {
-                        setScore([])
-                        navigation.goBack()
-                    }}
-                >
-                    <Text style={styles.buttonText}>Back</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.button} activeOpacity={0.6}
-                    onPress={() => {
-                        navigation.navigate('ShowResult', { score: score })
-                        setScore([])
-                    }}
-                >
-                    <Text style={[styles.buttonText]}>Submit test</Text>
-                </TouchableOpacity>
-            </View> : null}
-        </View>
+            {
+                !isLoading ? <View style={styles.buttonContainer}>
+                    <TouchableOpacity style={styles.button} activeOpacity={0.6}
+                        onPress={() => {
+                            setScore([])
+                            navigation.goBack()
+                        }}
+                    >
+                        <Text style={styles.buttonText}>Back</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} activeOpacity={0.6}
+                        onPress={() => {
+                            navigation.navigate('ShowResult', { score: score })
+                            setScore([])
+                        }}
+                    >
+                        <Text style={[styles.buttonText]}>Submit test</Text>
+                    </TouchableOpacity>
+                </View> : null
+            }
+        </View >
     )
 }
 

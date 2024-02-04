@@ -42,10 +42,10 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                         auth().signOut().then(() => {
                             // navigation.closeDrawer
                             GoogleSignin.signOut().then(() => {
-                                ToastAndroid.show('User Loged out successfully', ToastAndroid.LONG)
+                                ToastAndroid.show('User Logged out successfully', ToastAndroid.LONG)
                                 props.navigation.navigate('Home')
                             }).catch(() => {
-                                ToastAndroid.show('User not Loged out successfully', ToastAndroid.LONG)
+                                ToastAndroid.show('User not Logged out successfully', ToastAndroid.LONG)
                             })
                             console.log('User SignOut ')
                         }).catch((error) => {

@@ -93,7 +93,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} /> {/* Drawer Navigator nested to Stack Navigation */}
+        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} /> 
         <Stack.Screen name='AddQuestions' component={AddQuestions} options={{
           headerShown: true,
           headerTitle: 'Add Questions',
