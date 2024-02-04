@@ -32,6 +32,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
     setIsInProgress(false)
     return auth().signInWithCredential(googleCredential)
   }
+
+  // Checking signin status 
   const checkSignInStatus = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn()
     setIsSignedIn(isSignedIn)
@@ -45,7 +47,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     }, [])
   )
 
-
+//  getting current user logged in
   useEffect(() => {
     if (auth().currentUser?.displayName) {
       setName(convertToString(auth().currentUser?.displayName))
@@ -61,6 +63,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     return value
   }
 
+  // Configure the App with firebase
   useEffect(() => {
     GoogleSignin.configure({
       webClientId: '590950956131-9tlql3ba30mb0mdo5l69b19ul714r0ep.apps.googleusercontent.com',
@@ -94,12 +97,12 @@ const Home = ({ navigation }: HomeScreenProps) => {
               signInWithGoogle()
                 .then(gmail => {
                   ToastAndroid.show('Loged in as ' + gmail.user.displayName, ToastAndroid.LONG)
-                  navigation.navigate('ShowResult',{score:[]})
+                  navigation.navigate('ShowResult', { score: [] })
                   setIsSignedIn(true)
                 })
                 .catch(error => {
                   console.log(error)
-                  Alert.alert('Error',error)
+                  Alert.alert('Error', error)
                   setIsInProgress(false)
                 })
             }}

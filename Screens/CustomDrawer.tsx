@@ -1,4 +1,4 @@
-import { Alert, Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
+import { Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer'
 import auth from '@react-native-firebase/auth';
@@ -42,10 +42,10 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                         auth().signOut().then(() => {
                             // navigation.closeDrawer
                             GoogleSignin.signOut().then(() => {
-                                ToastAndroid.show('User Loged out successfully',ToastAndroid.LONG)
+                                ToastAndroid.show('User Loged out successfully', ToastAndroid.LONG)
                                 props.navigation.navigate('Home')
-                            }).catch(() => { 
-                                ToastAndroid.show('User not Loged out successfully',ToastAndroid.LONG)
+                            }).catch(() => {
+                                ToastAndroid.show('User not Loged out successfully', ToastAndroid.LONG)
                             })
                             console.log('User SignOut ')
                         }).catch((error) => {

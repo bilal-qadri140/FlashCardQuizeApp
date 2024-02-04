@@ -1,11 +1,16 @@
 import { StyleSheet } from 'react-native'
 import React from 'react'
+
+// Navigation imports
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+
+// Icons imports
 import Icon from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialComunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+
 // Screens for Navigation
 import AddQuestions from './Screens/AddQuestions';
 import Profile from './Screens/Profile';
@@ -23,14 +28,14 @@ export type RootStackParamList = {
   AddQuestions: {
     title: string
     id: string
-    name:string
+    name: string
   }
-  TakeQuiz:{
+  TakeQuiz: {
     title: string
     id: string
-    name:string
+    name: string
   }
-  ShowResult:{
+  ShowResult: {
     score: boolean[]
   }
 };
@@ -39,15 +44,15 @@ export type RootStackParamList = {
 export type DrawerParams = {
   Dashboard: undefined,
   Profile: undefined,
-  PrivacyPolicy:undefined
+  PrivacyPolicy: undefined
 }
 // Stack and Drawer Navigators
 const Stack = createNativeStackNavigator<RootStackParamList>()
 const Drawer = createDrawerNavigator<DrawerParams>()
-4
+
 
 // Drawer Navigation function
-const DrawerNavigation = ({ route,navigation }: any) => {
+const DrawerNavigation = () => {
 
   return (
     <Drawer.Navigator initialRouteName='Dashboard' drawerContent={(props) => <CustomDrawer {...props} />} screenOptions={{
@@ -88,7 +93,7 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} />
+        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} /> {/* Drawer Navigator nested to Stack Navigation */}
         <Stack.Screen name='AddQuestions' component={AddQuestions} options={{
           headerShown: true,
           headerTitle: 'Add Questions',
@@ -96,11 +101,11 @@ const App = () => {
         <Stack.Screen name='TakeQuiz' component={TakeQuiz} options={{
           headerShown: true,
           headerTitle: 'Quiz Test',
-        }}/>
+        }} />
         <Stack.Screen name='ShowResult' component={ShowResult} options={{
           headerShown: true,
           headerTitle: 'Quiz Result',
-        }}/>
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
@@ -108,8 +113,3 @@ const App = () => {
 
 
 export default App
-
-const styles = StyleSheet.create({
-  container: {
-  }
-})

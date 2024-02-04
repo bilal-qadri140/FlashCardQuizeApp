@@ -1,4 +1,4 @@
-import { Alert, Button, FlatList, NativeEventEmitter, StyleSheet, Text, TextInput, TouchableOpacity, View, useWindowDimensions } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackScreenProps, } from '@react-navigation/native-stack';
@@ -7,6 +7,8 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'
 import Modal from "react-native-modal";
 import { useFocusEffect } from '@react-navigation/native';
+
+
 // data type for storing title and id information from database
 interface dataType {
   id: string
@@ -17,7 +19,7 @@ interface dataType {
 type NavigationPrams = NativeStackScreenProps<RootStackParamList>
 
 // main App Starts
-const Dashboard = ({ navigation, route }: NavigationPrams) => {
+const Dashboard = ({ navigation }: NavigationPrams) => {
 
   // Hooks
   const [visible, setVisible] = useState(false)
@@ -96,7 +98,7 @@ const Dashboard = ({ navigation, route }: NavigationPrams) => {
   // starting JSX.Element
   return (
     <View style={[visible ? { backgroundColor: '#666', flex: 1 } : { backgroundColor: '#fff', flex: 1 }]}>
-      <Text style={{ fontSize: 30, alignSelf: 'center', fontWeight: 'bold', color: '#666',marginVertical:10 }}>
+      <Text style={{ fontSize: 30, alignSelf: 'center', fontWeight: 'bold', color: '#666', marginVertical: 10 }}>
         Quiz Topics
       </Text>
       {!isLoading ? <FlatList
@@ -118,7 +120,7 @@ const Dashboard = ({ navigation, route }: NavigationPrams) => {
         <Text style={styles.loadingText}>Loading...</Text>
       }
 
-
+      {/* Modal for Take Quiz and add Questions */}
       {isModalVisible ?
         <Modal
           isVisible={isModalVisible}
@@ -153,7 +155,8 @@ const Dashboard = ({ navigation, route }: NavigationPrams) => {
         : null
       }
 
-      {/* Custom Modal/Dialog box */}
+
+      {/* Custom Modal/Dialog box for adding Title*/}
       {visible ?
         <View style={styles.modal}>
           <Text style={styles.modalHeading}>Add Title</Text>

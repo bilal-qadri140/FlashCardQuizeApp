@@ -20,7 +20,6 @@ type TakeQuizParams = NativeStackScreenProps<RootStackParamList, 'TakeQuiz'>
 const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     const [quizData, setQuizData] = useState<dataType[]>([])
     const [isLoading, setIsloading] = useState<boolean>(false)
-    const [isSelected, setIsSelected] = useState<boolean>(false)
     const [score, setScore] = useState<boolean[]>([])
 
     const { id, title, name } = route.params
@@ -124,7 +123,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
                         setScore([])
                     }}
                 >
-                    <Text style={[styles.buttonText, styles.elevation]}>Submit test</Text>
+                    <Text style={[styles.buttonText]}>Submit test</Text>
                 </TouchableOpacity>
             </View> : null}
         </View>
@@ -210,14 +209,4 @@ const styles = StyleSheet.create({
         fontSize: 22,
         color: '#fff',
     },
-    elevation: {
-        elevation: 5,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 5,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-    }
 })

@@ -4,9 +4,12 @@ import { RootStackParamList } from '../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 type QuizResultParams = NativeStackScreenProps<RootStackParamList, 'ShowResult'>
+
+// Main App
 const ShowResult = ({ navigation, route }: QuizResultParams) => {
 
     const [result, setResult] = useState<number>()
+
     const { score } = route.params
     // let score = [true, false, false, true, true]
     console.log('Score in Result Screen --> ', score);
@@ -48,7 +51,7 @@ const ShowResult = ({ navigation, route }: QuizResultParams) => {
             <TouchableOpacity style={styles.button} activeOpacity={0.6} onPress={() => {
                 navigation.navigate('DrawerNavigation')
             }}>
-                <Text style={[styles.buttonText, styles.elevation]}>Go to Dashboard</Text>
+                <Text style={[styles.buttonText]}>Go to Dashboard</Text>
             </TouchableOpacity>
         </View>
     )
@@ -88,8 +91,8 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '90%',
         textAlign: 'center',
-        height:'auto',
-        paddingVertical:8,
+        height: 'auto',
+        paddingVertical: 8,
         // backgroundColor:'#333'
     },
     scoreContainer: {
@@ -124,15 +127,5 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         color: '#fff',
-    },
-    elevation: {
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 8,
-        },
-        shadowOpacity: 0.44,
-        shadowRadius: 10.32,
-        elevation: 16,
     }
 })

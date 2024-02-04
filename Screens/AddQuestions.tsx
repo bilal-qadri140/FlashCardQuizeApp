@@ -1,12 +1,14 @@
 import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 
+// imports for form validation
 import { Formik } from 'formik'
 import * as yup from 'yup'
 
+// Validations 
 const addQuestionValidation = yup.object().shape({
   question: yup
     .string()
@@ -27,6 +29,7 @@ const addQuestionValidation = yup.object().shape({
     .required()
 })
 
+//type for data sumbited to firebase
 type submitParams = {
   question: string
   option1: string
@@ -62,8 +65,8 @@ const AddQuestions = ({ navigation, route }: NavigationPrams) => {
     }
   };
 
+  // adding data to firebase 
   const handlePressed = (values: submitParams) => {
-
     const questionData = {
       question: values.question,
       options: [values.option1, values.option2, values.option3],
@@ -230,15 +233,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#fff',
-  },
-  elevation: {
-    shadowColor: "red",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.95,
-    shadowRadius: 3.84,
-    elevation: 4,
   }
 })
