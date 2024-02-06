@@ -1,5 +1,6 @@
 import { Alert, Image, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
+import LottieView from 'lottie-react-native';
 import {
   responsiveHeight,
   responsiveWidth,
@@ -47,7 +48,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
     }, [])
   )
 
-//  getting current user logged in
+  //  getting current user logged in
   useEffect(() => {
     if (auth().currentUser?.displayName) {
       setName(convertToString(auth().currentUser?.displayName))
@@ -77,9 +78,13 @@ const Home = ({ navigation }: HomeScreenProps) => {
     <View style={styles.container}>
       {/* <Text style={styles.heading} >Online Quiz</Text> */}
       <View style={styles.imageContainer}>
-        <Image
+        {/* <Image
           style={styles.image}
-          source={require('../assets/Images/Online-test.png')} />
+          source={require('../assets/Images/Online-test.png')} /> */}
+        <LottieView style={{
+          width: responsiveHeight(70),
+          height: responsiveHeight(45)
+        }} source={require('../assets/Images/Animation - 1707131205815.json')} autoPlay loop />
       </View>
       <View>
         <Text style={styles.heading}>Welcome to Online Quiz</Text>
@@ -143,10 +148,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   imageContainer: {
-    backgroundColor: '#bbbbbb',
+    backgroundColor: '#fff',
     alignItems: 'center',
     margin: 20,
     borderRadius: 10,
+    elevation: 5,
+    shadowColor: '#000',
+    marginTop: 40,
   },
   image: {
     width: responsiveHeight(70),

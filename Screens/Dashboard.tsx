@@ -136,7 +136,7 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
             >
               <Text style={styles.newModalButtonText}>Take Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.newModalButton} activeOpacity={0.6}
+            <TouchableOpacity style={[styles.newModalButton]} activeOpacity={0.6}
               onPress={() => {
                 navigation.navigate('AddQuestions', { title: quizTitle, id: id, name: name })
               }}
@@ -319,6 +319,6 @@ const styles = StyleSheet.create({
   },
   elevation: {
     shadowColor: "#000",
-    elevation: 4,
+    elevation: 5,
   }
 })
