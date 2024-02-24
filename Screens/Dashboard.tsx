@@ -34,12 +34,12 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
 
   // adding title of quiz to database
   const addingTitle = async (title: string) => {
-    console.log(title);
+    // console.log(title);
     try {
-      const docRef = await firestore().collection(name).add({
+      await firestore().collection(name).add({
         title: title,
       });
-      console.log('Quiz added with ID: ', docRef.id);
+      // console.log('Quiz added with ID: ', docRef.id);
     } catch (error) {
       console.log(error)
     }
@@ -51,7 +51,7 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
     try {
       setIsloading(true)
       const querySnapshot = await firestore().collection(collectionName).get()
-      console.log('data ==>>>' + querySnapshot);
+      // console.log('data ==>>>' + querySnapshot);
 
       const data: dataType[] = []
       querySnapshot.forEach((doc) => {
@@ -62,7 +62,7 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
         data.push(tempData)
       });
       setTitleData(data)
-      console.log("xz", data);
+      // console.log("xz", data);
       setIsloading(false)
     } catch (error) {
       console.error('Error getting documents:', error)

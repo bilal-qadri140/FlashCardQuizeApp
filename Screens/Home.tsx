@@ -11,13 +11,18 @@ import auth from '@react-native-firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import { useFocusEffect } from '@react-navigation/native';
+
+
+
+
 // Navigation Screen Props
+
 type HomeScreenProps = NativeStackScreenProps<RootStackParamList, 'Home'>
 
 // Our App
 const Home = ({ navigation }: HomeScreenProps) => {
-  console.log('Mounted');
-  console.log(navigation.isFocused());
+  // console.log('Mounted');
+  // console.log(navigation.isFocused());
 
   // State Hooks
   const [isInProgress, setIsInProgress] = useState<boolean>(false)
@@ -52,7 +57,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
   useEffect(() => {
     if (auth().currentUser?.displayName) {
       setName(convertToString(auth().currentUser?.displayName))
-      console.log(name);
+      // console.log(name);
     }
   }, []);
 
@@ -78,9 +83,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
     <View style={styles.container}>
       {/* <Text style={styles.heading} >Online Quiz</Text> */}
       <View style={styles.imageContainer}>
-        {/* <Image
-          style={styles.image}
-          source={require('../assets/Images/Online-test.png')} /> */}
         <LottieView style={{
           width: responsiveHeight(70),
           height: responsiveHeight(45)

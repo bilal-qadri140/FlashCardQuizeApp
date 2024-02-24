@@ -22,6 +22,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     const [isLoading, setIsloading] = useState<boolean>(false)
     const [score, setScore] = useState<boolean[]>([])
 
+    // data from previouse screen
     const { id, title, name } = route.params
 
     // Get all documents within a collection
@@ -50,7 +51,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     useEffect(() => {
         getAllDocuments()
         setScore([])
-        console.log('Take Quizn visited')
+        // console.log('Take Quizn visited')
     }, [])
 
     return (

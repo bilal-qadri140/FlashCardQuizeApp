@@ -1,9 +1,9 @@
 import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import auth from '@react-native-firebase/auth';
-import FloatingActionButton from '../Components/FloatingActionButton';
-const Profile = () => {
 
+// main app starts
+const Profile = () => {
 
   const [firstName, setFirstName] = useState<string | null>();
   const [lastName, setLastName] = useState<string | null>();

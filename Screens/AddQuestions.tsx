@@ -24,7 +24,7 @@ const addQuestionValidation = yup.object().shape({
     .required('Option 3 is required'),
   answer: yup
     .number()
-    .min(1, ({ min }) => `Correct answer must be less then ${min}`)
+    .min(1, ({ min }) => `Correct answer must be greater then ${min-1}`)
     .max(3, ({ max }) => `Correct answer must be less then ${max}`)
     .required()
 })
@@ -47,18 +47,17 @@ const AddQuestions = ({ navigation, route }: NavigationPrams) => {
 
   // data from Dashboard screen
   const { title, id, name } = route.params
-  console.log(name);
+  // console.log(name);
 
   // adding data to database
   const addQuestionToQuiz = async (questionData: any) => {
     try {
-      const docRef = await firestore().collection(name).doc(id).collection('questions').add({
+      await firestore().collection(name).doc(id).collection('questions').add({
         question: questionData.question,
         options: questionData.options,
         correctOptionIndex: questionData.correctOptionIndex,
       })
-
-      console.log('Question added with ID: ', docRef.id);
+      // console.log('Question added with ID: ', docRef.id);
     } catch (error: any) {
       // console.error('Error adding question: ', error);
       Alert.alert('Error to adding queation', 'Data not inserted!')

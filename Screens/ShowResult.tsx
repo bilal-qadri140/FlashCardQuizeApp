@@ -12,7 +12,7 @@ const ShowResult = ({ navigation, route }: QuizResultParams) => {
 
     const { score } = route.params
     // let score = [true, false, false, true, true]
-    console.log('Score in Result Screen --> ', score);
+    // console.log('Score in Result Screen --> ', score);
 
     useEffect(() => {
         // setResultPositive(0)
@@ -23,15 +23,15 @@ const ShowResult = ({ navigation, route }: QuizResultParams) => {
             }
         })
         const total = score.length
-        console.log('True => ', resultPositive);
-        console.log('Total ', total)
+        // console.log('True => ', resultPositive);
+        // console.log('Total ', total)
         if (resultPositive) {
             const totalResult = (resultPositive / total) * 100
             setResult(totalResult)
         } else {
             setResult(0)
         }
-        console.log('Result is ', result);
+        // console.log('Result is ', result);
 
     }, [])
 

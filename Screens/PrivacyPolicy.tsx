@@ -1,8 +1,10 @@
-import { ScrollView, StyleSheet, Text } from 'react-native'
+import { Linking, ScrollView, StyleSheet, Text, Touchable, TouchableOpacity } from 'react-native'
 import React from 'react'
-
+import { View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'
+import Icon2 from 'react-native-vector-icons/Entypo'
 const PrivacyPolicy = () => {
-    const privacyPolicy = `
+  const privacyPolicy = `
 This Privacy Policy describes how your Gmail address, Gmail photo, and name (collectively referred to as "Gmail-related information") are collected, used, and shared when you use the FlashcardQuiz mobile application (the "App").
 
 -> Personal Information We Collect
@@ -45,13 +47,30 @@ We may update this Privacy Policy from time to time to reflect changes in our pr
 
 -> Contact Us
 
-If you have any questions or concerns about this Privacy Policy, please contact us at (bilalattari1409l@gmail.com)
+If you have any questions or concerns about this Privacy Policy, please contact us at:
 `;
 
   return (
     <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-        <Text style={styles.heading}>Pravacy Policy for Quiz App</Text>
+      <Text style={styles.heading}>Pravacy Policy for Quiz App</Text>
       <Text style={styles.text}>{privacyPolicy}</Text>
+      <View style={styles.iconsContainer}>
+        <TouchableOpacity onPress={() => {
+          Linking.openURL('mailto:bilalattari1409l@gmail.com')
+        }}>
+          <Icon name='mail' size={45} color={'#0000ff99'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          Linking.openURL('tel:+923001317140')
+        }}>
+          <Icon name='call' size={45} color={'#0000ff99'} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => {
+          Linking.openURL('sms:+923001317140')
+        }}>
+          <Icon2 name='message' size={45} color={'#0000ff99'} />
+        </TouchableOpacity>
+      </View>
     </ScrollView>
   )
 }
@@ -59,21 +78,33 @@ If you have any questions or concerns about this Privacy Policy, please contact 
 export default PrivacyPolicy
 
 const styles = StyleSheet.create({
-    container:{
-        flex:1,
-        paddingHorizontal:10,
-
-    },
-    heading:{
-        fontSize:24,
-        fontWeight:'bold',
-        textAlign:'center',
-        marginVertical:10,
-        color:'#000'
-    },
-    text:{
-        fontSize:16,
-        fontWeight:'bold',
-        color:'#666'
-    }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff'
+  },
+  heading: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
+    color: '#000'
+  },
+  text: {
+    paddingHorizontal: 15,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#666'
+  },
+  iconsContainer: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
+    elevation: 4,
+    shadowColor: '#000',
+    width: '85%',
+    alignSelf: 'center',
+    borderRadius: 20,
+    paddingVertical: 6,
+  }
 })
