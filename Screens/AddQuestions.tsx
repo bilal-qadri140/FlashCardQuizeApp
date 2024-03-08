@@ -170,7 +170,6 @@ const AddQuestions = ({ navigation, route }: NavigationPrams) => {
           </>
         )}
       </Formik>
-
     </ScrollView >
   )
 }
@@ -181,18 +180,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   titleText: {
-    fontWeight: 'bold',
-    fontSize: 26,
+    fontWeight: '800',
+    fontSize: 28,
     alignSelf: 'center',
-    color: '#400F92'
+    color: '#400F92',
+    marginVertical: 25,
+    textTransform:'capitalize'
   },
   label: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: '#888'
+    color: '#555'
   },
   questionInput: {
     borderWidth: 1,
@@ -226,7 +227,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     marginTop: 10,
     backgroundColor: 'rgba(0,0,255,0.6)',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   buttonText: {
     fontSize: 20,

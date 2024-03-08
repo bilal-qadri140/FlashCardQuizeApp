@@ -83,10 +83,12 @@ const Home = ({ navigation }: HomeScreenProps) => {
     <View style={styles.container}>
       {/* <Text style={styles.heading} >Online Quiz</Text> */}
       <View style={styles.imageContainer}>
-        <LottieView style={{
-          width: responsiveHeight(70),
-          height: responsiveHeight(45)
-        }} source={require('../assets/Images/Animation - 1707131205815.json')} autoPlay loop />
+        <LottieView
+          duration={2000}
+          style={{
+            width: responsiveWidth(90),
+            height: responsiveHeight(45)
+          }} source={require('../assets/Images/Animation - 1707131205815.json')} autoPlay loop />
       </View>
       <View>
         <Text style={styles.heading}>Welcome to Online Quiz</Text>
@@ -104,7 +106,6 @@ const Home = ({ navigation }: HomeScreenProps) => {
               signInWithGoogle()
                 .then(gmail => {
                   ToastAndroid.show('Loged in as ' + gmail.user.displayName, ToastAndroid.LONG)
-                  // navigation.navigate('ShowResult', { score: [] })
                   setIsSignedIn(true)
                   navigation.navigate('DrawerNavigation')
                 })
@@ -119,9 +120,8 @@ const Home = ({ navigation }: HomeScreenProps) => {
           <View style={[styles.buttonContainer]}>
             <TouchableOpacity
               style={[styles.startedButton]}
-              activeOpacity={0.8}
+              activeOpacity={0.6}
               onPress={() => {
-                console.log(name + ' in Home Page');
                 navigation.navigate('DrawerNavigation')
                 ToastAndroid.show('Loged in as ' + name, ToastAndroid.LONG)
               }}
@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   button: {
-    height: 50,
+    height: 60,
     width: '90%',
     alignSelf: 'center',
     position: 'absolute',
@@ -193,19 +193,24 @@ const styles = StyleSheet.create({
     alignSelf: 'center'
   },
   startedButton: {
-    backgroundColor: '#0000ff99',
-    // backgroundColor:'#eee',
+    backgroundColor: '#fff',
+    // backgroundColor:'#0000ff',
     alignItems: 'center',
     justifyContent: 'center',
     width: '90%',
     alignSelf: 'center',
-    borderRadius: 6,
+    borderRadius: 30,
+    elevation: 5,
+    shadowColor: '#000',
+    borderColor: '#0000ff99',
+    borderWidth:3
   },
   startedButtonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: '700',
-    paddingVertical: 8,
+    fontSize: 22,
+    color: '#0000ff99',
+    fontWeight: '900',
+    paddingVertical: 12,
+    textTransform:'uppercase'
   },
 
 })

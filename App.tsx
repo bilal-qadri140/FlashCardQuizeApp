@@ -93,19 +93,10 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator initialRouteName='Home' screenOptions={{ headerShown: false }}>
         <Stack.Screen name='Home' component={Home} />
-        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} /> 
-        <Stack.Screen name='AddQuestions' component={AddQuestions} options={{
-          headerShown: true,
-          headerTitle: 'Add Questions',
-        }} />
-        <Stack.Screen name='TakeQuiz' component={TakeQuiz} options={{
-          headerShown: true,
-          headerTitle: 'Quiz Test',
-        }} />
-        <Stack.Screen name='ShowResult' component={ShowResult} options={{
-          headerShown: true,
-          headerTitle: 'Quiz Result',
-        }} />
+        <Stack.Screen name='DrawerNavigation' component={DrawerNavigation} />
+        <Stack.Screen name='AddQuestions' component={AddQuestions} />
+        <Stack.Screen name='TakeQuiz' component={TakeQuiz} />
+        <Stack.Screen name='ShowResult' component={ShowResult} />
       </Stack.Navigator>
     </NavigationContainer>
   )

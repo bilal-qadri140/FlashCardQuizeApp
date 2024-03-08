@@ -12,7 +12,7 @@ const ShowResult = ({ navigation, route }: QuizResultParams) => {
 
     const { score } = route.params
     // let score = [true, false, false, true, true]
-    // console.log('Score in Result Screen --> ', score);
+    console.log('Score in Result Screen --> ', score);
 
     useEffect(() => {
         // setResultPositive(0)
@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fef'
     },
     heading: {
+        marginTop:'20%',
         fontSize: 30,
         fontWeight: 'bold',
         alignSelf: 'center',

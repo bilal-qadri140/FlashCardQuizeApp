@@ -1,14 +1,13 @@
-import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackScreenProps, } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../App';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'
-import Modal from "react-native-modal";
+import Modal1 from "react-native-modal";
 import { useFocusEffect } from '@react-navigation/native';
-
-
+import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
 // data type for storing title and id information from database
 interface dataType {
   id: string
@@ -98,23 +97,30 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
   // starting JSX.Element
   return (
     <View style={[visible ? { backgroundColor: '#666', flex: 1 } : { backgroundColor: '#fff', flex: 1 }]}>
-      <Text style={{ fontSize: 30, alignSelf: 'center', fontWeight: 'bold', color: '#666', marginVertical: 10 }}>
+      {/* heading text */}
+      <Text style={{ fontSize: 30, alignSelf: 'center', fontWeight: 'bold', color: '#555', marginVertical: 10 }}>
         Quiz Topics
       </Text>
+
+      {/* list of quiz topics from firebase */}
       {!isLoading ? <FlatList
         data={titleData}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item }) => (
-          <TouchableOpacity style={[styles.list, styles.elevation, visible ? { backgroundColor: '#666' } : {}]} activeOpacity={0.5}
-            onPress={() => {
-              toggleModal()
-              setId(item.id)
-              setQuizTitle(item.title)
-            }}
-            disabled={visible}
+        renderItem={({ item, index }) => (
+          <Animated.View
+            entering={FadeInDown.delay(200 * index).duration(2000).springify().damping(3)}
           >
-            <Text style={styles.listText}>{item.title}</Text>
-          </TouchableOpacity>
+            <TouchableOpacity style={[styles.list, styles.elevation, visible ? { backgroundColor: '#666' } : {}]} activeOpacity={0.5}
+              onPress={() => {
+                toggleModal()
+                setId(item.id)
+                setQuizTitle(item.title)
+              }}
+              disabled={visible}
+            >
+              <Text style={styles.listText}>{item.title}</Text>
+            </TouchableOpacity>
+          </Animated.View>
         )}
       /> :
         <Text style={styles.loadingText}>Loading...</Text>
@@ -122,7 +128,7 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
 
       {/* Modal for Take Quiz and add Questions */}
       {isModalVisible ?
-        <Modal
+        <Modal1
           isVisible={isModalVisible}
           animationIn={'bounceInLeft'}
           animationInTiming={2000}
@@ -151,13 +157,17 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
             </TouchableOpacity>
 
           </View>
-        </Modal>
+        </Modal1>
         : null
       }
 
 
-      {/* Custom Modal/Dialog box for adding Title*/}
-      {visible ?
+      <Modal
+        animationType='slide'
+        transparent={true}
+        visible={visible}
+      // statusBarTranslucent
+      >
         <View style={styles.modal}>
           <Text style={styles.modalHeading}>Add Title</Text>
 
@@ -190,13 +200,15 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
             </TouchableOpacity>
           </View>
         </View>
-        : null
-      }
+
+      </Modal>
+
 
       {/* Floating Action Button */}
       <TouchableOpacity style={[styles.button]} activeOpacity={0.7}
         onPress={() => {
           setVisible(true)
+          // Alert.prompt('title', 'ncjd', text => console.log(text))
         }}
       >
         <Icon name='add' size={40} color={'#fff'} />
@@ -210,14 +222,14 @@ export default Dashboard
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000',
+    // backgroundColor: '#000',
   },
   list: {
     width: '90%',
     borderRadius: 10,
     alignSelf: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
+    marginVertical: 15,
     paddingVertical: 15,
     backgroundColor: '#fff',
     paddingHorizontal: 10,
@@ -225,6 +237,8 @@ const styles = StyleSheet.create({
   listText: {
     fontSize: 24,
     fontWeight: 'bold',
+    marginLeft: 10,
+    textTransform:'capitalize'
   },
   loadingText: {
     fontSize: 40,
@@ -267,9 +281,9 @@ const styles = StyleSheet.create({
     width: '90%',
     backgroundColor: '#fff',
     alignSelf: 'center',
-    borderRadius: 17,
+    borderRadius: 20,
     // marginTop:'40%'
-    borderWidth: 1.5,
+    // borderWidth: 1.5,
   },
   modalHeading: {
     fontSize: 24,
@@ -313,6 +327,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#0000ff99',
+    // backgroundColor: '#2196F3',
     position: 'absolute',
     bottom: 20,
     right: 20,
