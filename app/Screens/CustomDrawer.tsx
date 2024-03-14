@@ -28,7 +28,7 @@ const CustomDrawer = (props: DrawerContentComponentProps) => {
                 {imageURL ?
                     <Image source={{ uri: imageURL }}
                         style={styles.image} />
-                    : <Image source={require('../assets/Images/user.jpeg')}
+                    : <Image source={require('../../assets/Images/user.jpeg')}
                         style={styles.image} />}
                 <Text style={styles.profileName}>{name ? name : 'John Doe'}</Text>
                 <Text style={styles.profileEmail}>{email ? email : 'example@gmail.com'}</Text>

@@ -1,18 +1,25 @@
-import { Alert, FlatList, StyleSheet, Text, TextInput, TouchableOpacity, View, Modal } from 'react-native'
+import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { NativeStackScreenProps, } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from '../../App';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth'
 import Modal1 from "react-native-modal";
 import { useFocusEffect } from '@react-navigation/native';
-import Animated, { FadeInDown, FadeInUp } from 'react-native-reanimated';
+import { ActivityIndicator } from 'react-native-paper';
+
+import ListItem from '../Components/ListItem';
+import ItemDelete from '../Components/ItemDelete';
+import ModalComponenet from '../Components/ModalComponent';
+
+
 // data type for storing title and id information from database
 interface dataType {
   id: string
   title: string
 }
+
 
 // Navigation Screen Props
 type NavigationPrams = NativeStackScreenProps<RootStackParamList>
@@ -68,6 +75,7 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
     }
   };
 
+
   useEffect(() => {
     if (auth().currentUser?.displayName) {
       const collectionName = auth().currentUser?.displayName;
@@ -94,6 +102,47 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
     setIsModalVisible(!isModalVisible)
   }
 
+  const handleTitlePressed = (id: string, title: string) => {
+    toggleModal()
+    setId(id)
+    console.log(id);
+    setQuizTitle(title)
+  }
+
+  // deleting title from firebase
+  const handleDelete = (id: string) => {
+    firestore().collection(name).doc(id).delete().then(() => ToastAndroid.show('Quiz Topic Deleted', ToastAndroid.LONG)).catch(() => {
+      ToastAndroid.show('Error deleting title!', ToastAndroid.LONG)
+    })
+    setReload(!reload)
+  }
+
+
+  // Modal Handling section
+  const handleCancel = () => {
+    setVisible(false)
+  }
+
+  const handleConfirm = () => {
+    setReload(!reload)
+    if (title) {
+      addingTitle(title)
+      setVisible(false)
+    }
+    else {
+      Alert.alert('Error', 'Please add Title of Quiz')
+    }
+  }
+
+
+  if (isLoading) {
+    return (
+      // <Text style={styles.loadingText}>Loading...</Text>
+      <ActivityIndicator animating={true} size={100} style={{ marginTop: '50%' }} theme={{ colors: { primary: 'green' } }} />
+    )
+  }
+
+
   // starting JSX.Element
   return (
     <View style={[visible ? { backgroundColor: '#666', flex: 1 } : { backgroundColor: '#fff', flex: 1 }]}>
@@ -103,57 +152,48 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
       </Text>
 
       {/* list of quiz topics from firebase */}
-      {!isLoading ? <FlatList
+      <FlatList
         data={titleData}
         showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <Animated.View
-            entering={FadeInDown.delay(200 * index).duration(2000).springify().damping(3)}
-          >
-            <TouchableOpacity style={[styles.list, styles.elevation, visible ? { backgroundColor: '#666' } : {}]} activeOpacity={0.5}
-              onPress={() => {
-                toggleModal()
-                setId(item.id)
-                setQuizTitle(item.title)
-              }}
-              disabled={visible}
-            >
-              <Text style={styles.listText}>{item.title}</Text>
-            </TouchableOpacity>
-          </Animated.View>
-        )}
-      /> :
-        <Text style={styles.loadingText}>Loading...</Text>
-      }
+        ItemSeparatorComponent={() => (<View style={{ height: 2, backgroundColor: visible ? '#666' : '#ddd' }}></View>)}
+        renderItem={({ item }) => <ListItem
+          key={item.title}
+          item={item}
+          onPress={() => { handleTitlePressed(item.id, item.title) }}
+          renderRightActions={() => <ItemDelete onPress={() => { handleDelete(item.id) }} />}
+          visible={isModalVisible}
+          modalVisible={visible}
+        />}
+      />
 
       {/* Modal for Take Quiz and add Questions */}
       {isModalVisible ?
         <Modal1
           isVisible={isModalVisible}
           animationIn={'bounceInLeft'}
-          animationInTiming={2000}
+          animationInTiming={1500}
           onBackButtonPress={toggleModal}
         >
-          <View style={styles.newModal}>
-            <TouchableOpacity style={styles.newModalButton} activeOpacity={0.6}
+          <View style={styles.modal}>
+            <TouchableOpacity style={styles.modalButton} activeOpacity={0.6}
               onPress={() => {
                 navigation.navigate('TakeQuiz', { title: quizTitle, id: id, name: name })
               }}
             >
-              <Text style={styles.newModalButtonText}>Take Quiz</Text>
+              <Text style={styles.modalButtonText}>Take Quiz</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.newModalButton]} activeOpacity={0.6}
+            <TouchableOpacity style={[styles.modalButton]} activeOpacity={0.6}
               onPress={() => {
                 navigation.navigate('AddQuestions', { title: quizTitle, id: id, name: name })
               }}
             >
-              <Text style={styles.newModalButtonText}>Add New Question</Text>
+              <Text style={styles.modalButtonText}>Add New Question</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={[styles.newModalButton, { backgroundColor: '#bbb' }]}
+            <TouchableOpacity style={[styles.modalButton, { backgroundColor: '#bbb' }]}
               activeOpacity={0.6}
               onPress={toggleModal}
             >
-              <Text style={[styles.newModalButtonText, { color: '#000' }]}>CANCEL</Text>
+              <Text style={[styles.modalButtonText, { color: '#000' }]}>CANCEL</Text>
             </TouchableOpacity>
 
           </View>
@@ -161,54 +201,26 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
         : null
       }
 
-
-      <Modal
+      {/* Custom Modal import from Components folder */}
+      <ModalComponenet
         animationType='slide'
         transparent={true}
         visible={visible}
-      // statusBarTranslucent
-      >
-        <View style={styles.modal}>
-          <Text style={styles.modalHeading}>Add Title</Text>
-
-          {/* Text input */}
-          <TextInput
-            placeholder='Title'
-            style={styles.modaleInput}
-            onChangeText={(val) => setTitle(val)}
-          />
-
-          {/* Buttons */}
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => setVisible(false)}
-            >
-              <Text style={styles.modalButtonText}>CANCEL</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.modalButton} onPress={() => {
-              setReload(!reload)
-              if (title) {
-                addingTitle(title)
-                setVisible(false)
-              }
-              else {
-                Alert.alert('Error', 'Please add Title of Quiz')
-              }
-            }}>
-              <Text style={styles.modalButtonText}>CONFIRM</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-
-      </Modal>
+        onShow={() => { console.log('Modal Shown') }}
+        onRequestClose={() => {
+          console.log('Modal Closed')
+          setVisible(!visible)
+        }}
+        handleCancel={handleCancel}
+        handleConfirm={handleConfirm}
+        handleTitle={(value) => setTitle(value)}
+      />
 
 
       {/* Floating Action Button */}
-      <TouchableOpacity style={[styles.button]} activeOpacity={0.7}
+      <TouchableOpacity style={[styles.floatingButton]} activeOpacity={0.7}
         onPress={() => {
           setVisible(true)
-          // Alert.prompt('title', 'ncjd', text => console.log(text))
         }}
       >
         <Icon name='add' size={40} color={'#fff'} />
@@ -220,35 +232,8 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
 export default Dashboard
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // backgroundColor: '#000',
-  },
-  list: {
-    width: '90%',
-    borderRadius: 10,
-    alignSelf: 'center',
-    justifyContent: 'center',
-    marginVertical: 15,
-    paddingVertical: 15,
-    backgroundColor: '#fff',
-    paddingHorizontal: 10,
-  },
-  listText: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    textTransform:'capitalize'
-  },
-  loadingText: {
-    fontSize: 40,
-    fontWeight: 'bold',
-    alignSelf: 'center',
-    marginTop: '50%',
-    color: '#444'
-  },
 
-  newModal: {
+  modal: {
     // flex: 1,
     width: '100%',
     backgroundColor: '#fff',
@@ -258,7 +243,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     paddingVertical: 20,
   },
-  newModalButton: {
+  modalButton: {
     backgroundColor: '#0000ff99',
     width: '90%',
     alignSelf: 'center',
@@ -267,60 +252,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 10,
   },
-  newModalButtonText: {
+  modalButtonText: {
     fontWeight: 'bold',
     fontSize: 22,
     paddingVertical: 8,
     color: '#fff',
-
   },
-  modal: {
-    position: 'absolute',
-    top: '30%',
-    height: 200,
-    width: '90%',
-    backgroundColor: '#fff',
-    alignSelf: 'center',
-    borderRadius: 20,
-    // marginTop:'40%'
-    // borderWidth: 1.5,
-  },
-  modalHeading: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#666',
-    marginVertical: 10,
-    alignSelf: 'center'
-  },
-  modaleInput: {
-    borderWidth: 1,
-    width: '90%',
-    alignSelf: 'center',
-    borderRadius: 8,
-    fontSize: 18,
-    paddingHorizontal: 10,
-    fontWeight: 'bold'
-  },
-  modalButton: {
-    borderRadius: 6,
-
-  },
-  modalButtonText: {
-    color: '#444',
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingLeft: 15,
-  },
-  buttonContainer: {
-    width: 'auto',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    position: 'absolute',
-    bottom: 10,
-    right: 20,
-  },
-
-  button: {
+  floatingButton: {
     borderRadius: 35,
     width: 70,
     height: 70,
@@ -331,9 +269,5 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     right: 20,
-  },
-  elevation: {
-    shadowColor: "#000",
-    elevation: 5,
   }
 })

@@ -2,7 +2,7 @@ import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View 
 import React from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from '../../App';
 
 // imports for form validation
 import { Formik } from 'formik'
@@ -24,7 +24,7 @@ const addQuestionValidation = yup.object().shape({
     .required('Option 3 is required'),
   answer: yup
     .number()
-    .min(1, ({ min }) => `Correct answer must be greater then ${min-1}`)
+    .min(1, ({ min }) => `Correct answer must be greater then ${min - 1}`)
     .max(3, ({ max }) => `Correct answer must be less then ${max}`)
     .required()
 })
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     color: '#400F92',
     marginVertical: 25,
-    textTransform:'capitalize'
+    textTransform: 'capitalize'
   },
   label: {
     fontSize: 24,

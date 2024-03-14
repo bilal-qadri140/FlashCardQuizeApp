@@ -9,7 +9,7 @@ import {
 import { GoogleSignin, GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import auth from '@react-native-firebase/auth';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../App';
+import { RootStackParamList } from '../../App';
 import { useFocusEffect } from '@react-navigation/native';
 
 
@@ -88,7 +88,7 @@ const Home = ({ navigation }: HomeScreenProps) => {
           style={{
             width: responsiveWidth(90),
             height: responsiveHeight(45)
-          }} source={require('../assets/Images/Animation - 1707131205815.json')} autoPlay loop />
+          }} source={require('../../assets/Images/Animation - 1707131205815.json')} autoPlay loop />
       </View>
       <View>
         <Text style={styles.heading}>Welcome to Online Quiz</Text>
@@ -203,14 +203,14 @@ const styles = StyleSheet.create({
     elevation: 5,
     shadowColor: '#000',
     borderColor: '#0000ff99',
-    borderWidth:3
+    borderWidth: 3
   },
   startedButtonText: {
     fontSize: 22,
     color: '#0000ff99',
     fontWeight: '900',
     paddingVertical: 12,
-    textTransform:'uppercase'
+    textTransform: 'uppercase'
   },
 
 })

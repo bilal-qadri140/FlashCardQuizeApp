@@ -7,19 +7,20 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 // Icons imports
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon1 from 'react-native-vector-icons/FontAwesome'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons'
 import MaterialComunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { Icon } from 'react-native-elements'
 
 // Screens for Navigation
-import AddQuestions from './Screens/AddQuestions';
-import Profile from './Screens/Profile';
-import Home from './Screens/Home'
-import Dashboard from './Screens/Dashboard'
-import CustomDrawer from './Screens/CustomDrawer';
-import TakeQuiz from './Screens/TakeQuiz';
-import ShowResult from './Screens/ShowResult';
-import PrivacyPolicy from './Screens/PrivacyPolicy';
+import AddQuestions from './app/Screens/AddQuestions';
+import Profile from './app/Screens/Profile';
+import Home from './app/Screens/Home'
+import Dashboard from './app/Screens/Dashboard'
+import CustomDrawer from './app/Screens/CustomDrawer';
+import TakeQuiz from './app/Screens/TakeQuiz';
+import ShowResult from './app/Screens/ShowResult';
+import PrivacyPolicy from './app/Screens/PrivacyPolicy';
 
 // params for Stack Navigation
 export type RootStackParamList = {
@@ -74,7 +75,7 @@ const DrawerNavigation = () => {
       }} />
       <Drawer.Screen name='Profile' component={Profile} options={{
         drawerIcon: ({ color }) => (
-          <Icon name='user-o' size={28} color={color} />
+          <Icon1 name='user-o' size={28} color={color} />
         )
       }} />
       <Drawer.Screen name='PrivacyPolicy' component={PrivacyPolicy} options={{

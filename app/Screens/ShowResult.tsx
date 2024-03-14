@@ -1,6 +1,6 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { RootStackParamList } from '../App'
+import { RootStackParamList } from '../../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 
 type QuizResultParams = NativeStackScreenProps<RootStackParamList, 'ShowResult'>
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#fef'
     },
     heading: {
-        marginTop:'20%',
+        marginTop: '20%',
         fontSize: 30,
         fontWeight: 'bold',
         alignSelf: 'center',

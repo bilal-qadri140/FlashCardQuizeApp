@@ -1,7 +1,7 @@
 import { ActivityIndicator, Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
-import { RootStackParamList } from '../App'
+import { RootStackParamList } from '../../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import {
     responsiveHeight, responsiveWidth,
@@ -28,7 +28,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
     const [selectedOption, setSelectedOption] = useState(-1)
     const [dataFound, setDataFound] = useState(true)
-    const [isWaiting, setIsWaiting] = useState(false)
+    
     // data from previouse screen
     const { id, title, name } = route.params
 
@@ -108,7 +108,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
                         width: responsiveWidth(100),
                         height: responsiveHeight(45),
                         elevation: 15,
-                    }} source={require('../assets/Images/datanotfound.json')} autoPlay loop />
+                    }} source={require('../../assets/Images/datanotfound.json')} autoPlay loop />
                 <TouchableOpacity
                     style={[styles.button]}
                     activeOpacity={0.6}
