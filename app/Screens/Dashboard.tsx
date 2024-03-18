@@ -12,6 +12,7 @@ import { ActivityIndicator } from 'react-native-paper';
 import ListItem from '../Components/ListItem';
 import ItemDelete from '../Components/ItemDelete';
 import ModalComponenet from '../Components/ModalComponent';
+import colors from '../config/colors';
 
 
 // data type for storing title and id information from database
@@ -163,7 +164,8 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
           renderRightActions={() => <ItemDelete onPress={() => { handleDelete(item.id) }} />}
           visible={isModalVisible}
           modalVisible={visible}
-        />}
+        />
+        }
       />
 
       {/* Modal for Take Quiz and add Questions */}
@@ -236,7 +238,7 @@ const styles = StyleSheet.create({
   modal: {
     // flex: 1,
     width: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     borderRadius: 6,
     borderWidth: 1,
     height: 'auto',
@@ -244,7 +246,7 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
   },
   modalButton: {
-    backgroundColor: '#0000ff99',
+    backgroundColor: colors.primary,
     width: '90%',
     alignSelf: 'center',
     borderRadius: 8,
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 22,
     paddingVertical: 8,
-    color: '#fff',
+    color: colors.white,
   },
   floatingButton: {
     borderRadius: 35,
@@ -264,8 +266,7 @@ const styles = StyleSheet.create({
     height: 70,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#0000ff99',
-    // backgroundColor: '#2196F3',
+    backgroundColor: colors.primary,
     position: 'absolute',
     bottom: 20,
     right: 20,

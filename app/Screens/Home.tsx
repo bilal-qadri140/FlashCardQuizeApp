@@ -110,6 +110,9 @@ const Home = ({ navigation }: HomeScreenProps) => {
                   navigation.navigate('DrawerNavigation')
                 })
                 .catch(error => {
+                  if (error.message === 'NETWORK_ERROR')
+                    console.log('erroorrr');
+                    
                   console.log(error)
                   Alert.alert('Error', error)
                   setIsInProgress(false)

@@ -1,4 +1,4 @@
-import { Alert, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Alert, ScrollView, StyleSheet, Text, TextInput, ToastAndroid, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import firestore from '@react-native-firebase/firestore';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -7,12 +7,15 @@ import { RootStackParamList } from '../../App';
 // imports for form validation
 import { Formik } from 'formik'
 import * as yup from 'yup'
+import FormField from '../Components/FormField';
+import SubmitButton from '../Components/SubmitButton';
+import colors from '../config/colors';
 
 // Validations 
 const addQuestionValidation = yup.object().shape({
   question: yup
     .string()
-    .required('Question is Required'),
+    .required('Question is required'),
   option1: yup
     .string()
     .required('Option 1 is required'),
@@ -57,21 +60,20 @@ const AddQuestions = ({ navigation, route }: NavigationPrams) => {
         options: questionData.options,
         correctOptionIndex: questionData.correctOptionIndex,
       })
-      // console.log('Question added with ID: ', docRef.id);
     } catch (error: any) {
-      // console.error('Error adding question: ', error);
       Alert.alert('Error to adding queation', 'Data not inserted!')
     }
   };
 
   // adding data to firebase 
-  const handlePressed = (values: submitParams) => {
+  const handleSubmit = (values: submitParams) => {
     const questionData = {
       question: values.question,
       options: [values.option1, values.option2, values.option3],
       correctOptionIndex: (values.answer - 1),
     }
     addQuestionToQuiz(questionData).then(() => {
+      ToastAndroid.show('Question added successfuly.', ToastAndroid.LONG)
       navigation.goBack()
     }).catch(() => {
       Alert.alert('Error', 'Data not added. Please try again later.')
@@ -84,89 +86,44 @@ const AddQuestions = ({ navigation, route }: NavigationPrams) => {
       <Text style={styles.titleText}>{title}</Text>
       <Formik
         initialValues={{ question: '', option1: '', option2: '', option3: '', answer: 0 }}
-        onSubmit={values => handlePressed(values)}
+        onSubmit={values => handleSubmit(values)}
         validationSchema={addQuestionValidation}
       >
-        {({
-          handleChange,
-          handleSubmit,
-          values,
-          errors,
-          isValid
-        }) => (
+        {() => (
           <>
             <View style={{ height: 140 }}>
-              <Text style={styles.label}>Question</Text>
-              <TextInput
-                style={styles.questionInput}
+              <FormField
+                placeholder='Question'
+                name='question'
                 numberOfLines={3}
                 multiline={true}
-                value={values.question}
-                onChangeText={handleChange('question')}
+                textAlignVertical='top'
               />
-              {errors.question ? <View>
-                <Text style={{ fontSize: 15, color: 'red' }}>{errors.question}</Text>
-              </View> : null}
             </View>
-            <Text style={styles.label}>Option 1</Text>
-            <View style={styles.optionContainer}>
-              <TextInput
-                style={styles.optionInput}
-                numberOfLines={1}
-                value={values.option1}
-                onChangeText={handleChange('option1')}
-              />
-              {errors.option1 ? <View>
-                <Text style={{ fontSize: 15, color: 'red' }}>{errors.option1}</Text>
-              </View> : null}
-            </View>
-            <Text style={styles.label}>Option 2</Text>
-            <View style={styles.optionContainer}>
-              <TextInput
-                style={styles.optionInput}
-                numberOfLines={1}
-                value={values.option2}
-                onChangeText={handleChange('option2')}
-              />
-              {errors.option2 ? <View>
-                <Text style={{ fontSize: 15, color: 'red' }}>{errors.option2}</Text>
-              </View> : null}
-            </View>
-            <Text style={styles.label}>Option 3</Text>
-            <View style={styles.optionContainer}>
-              <TextInput
-                style={styles.optionInput}
-                numberOfLines={1}
-                value={values.option3}
-                onChangeText={handleChange('option3')}
-              />
-              {errors.option3 ? <View>
-                <Text style={{ fontSize: 15, color: 'red' }}>{errors.option3}</Text>
-              </View> : null}
-            </View>
-            <Text style={styles.label}>Correct Option</Text>
-            <View style={[styles.optionContainer, { height: 90 }]}>
-              <TextInput
-                style={styles.optionInput}
-                numberOfLines={1}
-                placeholder='Ex.1,2,3'
-                keyboardType='numeric'
-                value={values.answer + ''}
-                onChangeText={handleChange('answer')}
-              />
-              {errors.answer ? <View>
-                <Text style={{ fontSize: 15, color: 'red' }}>{errors.answer}</Text>
-              </View> : null}
-            </View>
+            <FormField
+              placeholder='Option 1'
+              name='option1'
+              numberOfLines={1}
+            />
+            <FormField
+              placeholder='Option 2'
+              name='option2'
+              numberOfLines={1}
+            />
+            <FormField
+              placeholder='Option 3'
+              name='option3'
+              numberOfLines={1}
+            />
+            <FormField
+              numberOfLines={1}
+              name='answer'
+              placeholder='Correct Option Ex.1,2,3'
+              keyboardType='numeric'
+            />
+            
             {/* Add question button*/}
-            <TouchableOpacity
-              style={[styles.button]}
-              activeOpacity={0.6}
-              onPress={() => handleSubmit()}
-              disabled={!isValid}
-            >
-              <Text style={styles.buttonText}>Add Question</Text>
-            </TouchableOpacity>
+            <SubmitButton title='Add Question'/>
           </>
         )}
       </Formik>
@@ -179,59 +136,15 @@ export default AddQuestions
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     paddingHorizontal: 20,
   },
   titleText: {
     fontWeight: '800',
     fontSize: 28,
     alignSelf: 'center',
-    color: '#400F92',
+    color: colors.primary,
     marginVertical: 25,
     textTransform: 'capitalize'
   },
-  label: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#555'
-  },
-  questionInput: {
-    borderWidth: 1,
-    borderRadius: 8,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#555',
-    textAlignVertical: 'top',
-    padding: 10,
-  },
-  optionContainer: {
-    // flexDirection: 'row',
-    height: 65,
-    // backgroundColor: '#eee',
-    width: '100%',
-  },
-  optionInput: {
-    borderWidth: 1,
-    borderRadius: 8,
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#555',
-    padding: 8,
-    width: '100%',
-    height: 45
-  },
-  button: {
-    borderRadius: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 10,
-    marginTop: 10,
-    backgroundColor: 'rgba(0,0,255,0.6)',
-    marginBottom: 20,
-  },
-  buttonText: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff',
-  }
 })
