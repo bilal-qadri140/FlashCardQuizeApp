@@ -156,9 +156,8 @@ const Dashboard = ({ navigation }: NavigationPrams) => {
       <FlatList
         data={titleData}
         showsVerticalScrollIndicator={false}
-        ItemSeparatorComponent={() => (<View style={{ height: 2, backgroundColor: visible ? '#666' : '#ddd' }}></View>)}
+        ItemSeparatorComponent={() => (<View style={{ height: 2, backgroundColor: visible ? '#666' : colors.light }}></View>)}
         renderItem={({ item }) => <ListItem
-          key={item.title}
           item={item}
           onPress={() => { handleTitlePressed(item.id, item.title) }}
           renderRightActions={() => <ItemDelete onPress={() => { handleDelete(item.id) }} />}

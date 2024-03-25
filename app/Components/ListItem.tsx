@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableHighlight} from 'react-native'
+import { StyleSheet, Text, TouchableHighlight } from 'react-native'
 import React from 'react'
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
@@ -11,11 +11,9 @@ type ListItemProps = {
     renderRightActions?: () => React.ReactNode
     renderLeftActions?: () => React.ReactNode
     visible: boolean
-    modalVisible:boolean
+    modalVisible: boolean
 }
-
-const ListItem = ({ item, onPress, renderLeftActions, renderRightActions, visible,modalVisible }: ListItemProps) => {
-
+const ListItem = ({ item, onPress, renderLeftActions, renderRightActions, visible, modalVisible }: ListItemProps) => {
     return (
         <Swipeable
             friction={1}
@@ -47,7 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#fff',
         height: '100%',
-        paddingHorizontal:10
+        paddingHorizontal: 10
     },
     listText: {
         fontSize: 24,

@@ -8,6 +8,9 @@ import {
 } from "react-native-responsive-dimensions";
 
 import LottieView from 'lottie-react-native';
+import colors from '../config/colors'
+import QuestionNotFound from '../Components/QuestionNotFound'
+import AppButton from '../Components/AppButton'
 
 // data type for storing title and id information from database
 interface dataType {
@@ -28,7 +31,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
     const [selectedOption, setSelectedOption] = useState(-1)
     const [dataFound, setDataFound] = useState(true)
-    
+
     // data from previouse screen
     const { id, title, name } = route.params
 
@@ -100,23 +103,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
     // handling no question found 
     if (!dataFound) {
         return (
-            <View style={[styles.container, { justifyContent: 'center', backgroundColor: '#fff' }]}>
-                {/* <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#555',margin:20 }}>No Questions Found!</Text> */}
-                <LottieView
-                    duration={2000}
-                    style={{
-                        width: responsiveWidth(100),
-                        height: responsiveHeight(45),
-                        elevation: 15,
-                    }} source={require('../../assets/Images/datanotfound.json')} autoPlay loop />
-                <TouchableOpacity
-                    style={[styles.button]}
-                    activeOpacity={0.6}
-                    onPress={() => navigation.goBack()}
-                >
-                    <Text style={styles.buttonText}>Go Back</Text>
-                </TouchableOpacity>
-            </View>
+            <QuestionNotFound onPress={() => navigation.goBack()} />
         )
     }
 
@@ -160,6 +147,7 @@ const TakeQuiz = ({ navigation, route }: TakeQuizParams) => {
                         <Text style={styles.optionText}>{quizData[currentIndex]?.options ? quizData[currentIndex]?.options.at(2) : ''}</Text>
                     </TouchableOpacity>
 
+                    <AppButton title='Next' onPress={handleNext} disabled={selectedOption === -1} />
                     <TouchableOpacity
                         style={[styles.button, { alignSelf: 'center', marginTop: 20 }]}
                         activeOpacity={0.6}
@@ -184,14 +172,14 @@ export default TakeQuiz
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         // justifyContent: 'center',
         alignItems: 'center'
     },
     heading: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: '#666',
+        color: colors.primary,
         marginTop: 30,
         textTransform: 'capitalize'
     },
@@ -203,7 +191,7 @@ const styles = StyleSheet.create({
     },
     question: {
         fontSize: 22,
-        color: '#000',
+        color: colors.medium,
         marginTop: 10,
         fontWeight: 'bold',
         width: '90%',
@@ -214,16 +202,16 @@ const styles = StyleSheet.create({
         fontSize: 20,
         paddingVertical: 10,
         paddingHorizontal: 12,
-        color: '#666',
+        color: colors.medium,
     },
     optionTouchable: {
         width: '90%',
         borderRadius: 6,
         alignSelf: 'center',
         marginVertical: 10,
-        backgroundColor: '#fff',
+        backgroundColor: colors.white,
         elevation: 6,
-        shadowColor: '#000'
+        shadowColor: colors.black
     },
     loading: {
         fontWeight: 'bold',
@@ -237,12 +225,12 @@ const styles = StyleSheet.create({
         paddingVertical: 6,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,255,0.6)',
+        backgroundColor: colors.primary,
     },
     buttonText: {
         fontWeight: 'bold',
         fontSize: 22,
-        color: '#fff',
-        textTransform: "capitalize"
+        color: colors.white,
+        textTransform: "uppercase"
     },
 })
