@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Alert, FlatList, StyleSheet, Text, TouchableOpacity, View, ToastAndroid } from 'react-native'
 import React, { useCallback, useEffect, useState } from 'react'
 import Icon from 'react-native-vector-icons/MaterialIcons';

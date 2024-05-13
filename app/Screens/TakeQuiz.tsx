@@ -1,13 +1,15 @@
-import { ActivityIndicator, Button, FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
+/* eslint-disable prettier/prettier */
+/* eslint-disable comma-dangle */
+/* eslint-disable prettier/prettier */
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import firestore from '@react-native-firebase/firestore'
 import { RootStackParamList } from '../../App'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import {
-    responsiveHeight, responsiveWidth,
+    responsiveHeight,
 } from "react-native-responsive-dimensions";
 
-import LottieView from 'lottie-react-native';
 import colors from '../config/colors'
 import QuestionNotFound from '../Components/QuestionNotFound'
 import AppButton from '../Components/AppButton'
